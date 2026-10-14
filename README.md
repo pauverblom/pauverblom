@@ -45,5 +45,9 @@ Every visitor gets a launch. Pick a motor, open the pre-filled issue, and a GitH
 </p>
 
 <!-- LEADERBOARD:START -->
-<p align="center"><sub>The pad is clear. No launches yet, so the first one takes the top spot.</sub></p>
+| | Pilot | Motor | Apogee | Max speed | Flight |
+| :-: | --- | :-: | --: | --: | :-: |
+| 🥇 | [@pauverblom](https://github.com/pauverblom) | I | **1,094 m** | Mach 0.51 | [#1](https://github.com/pauverblom/pauverblom/issues/1) |
+
+<sub>1 launch by 1 pilot · latest: @pauverblom reached 1,094 m on a I motor</sub>
 <!-- LEADERBOARD:END -->
