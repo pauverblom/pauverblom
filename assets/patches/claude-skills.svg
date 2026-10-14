@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168" height="168" viewBox="0 0 168 168" role="img" aria-label="CLAUDE SKILLS mission patch">
+<title>CLAUDE SKILLS</title>
+<defs>
+  <path id="top-claude-skills" d="M20.0,84.0 A64,64 0 0 1 148.0,84.0"/>
+  <path id="bot-claude-skills" d="M18.0,84.0 A66,66 0 0 0 150.0,84.0"/>
+</defs>
+<circle cx="84.0" cy="84.0" r="82.0" fill="#0d141c" stroke="#ffb547" stroke-width="3"/>
+<circle cx="84.0" cy="84.0" r="75.0" fill="none" stroke="#ffb547" stroke-width="1" stroke-dasharray="2 3" opacity=".7"/>
+<circle cx="84.0" cy="84.0" r="46" fill="none" stroke="#ffb547" stroke-width="1.6" opacity=".9"/>
+<circle cx="18.0" cy="84.0" r="2.6" fill="#ffb547"/><circle cx="150.0" cy="84.0" r="2.6" fill="#ffb547"/>
+<text font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" font-weight="700" fill="#e9eef3" letter-spacing="1.10">
+  <textPath href="#top-claude-skills" startOffset="50%" text-anchor="middle">CLAUDE SKILLS</textPath></text>
+<text font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10" fill="#ffb547" letter-spacing="1.60">
+  <textPath href="#bot-claude-skills" startOffset="50%" text-anchor="middle">AGENT TOOLING</textPath></text>
+<g transform="translate(52.0,52.0)">
+      <path d="M32 6 C34 24 40 30 58 32 C40 34 34 40 32 58 C30 40 24 34 6 32 C24 30 30 24 32 6 Z"
+            fill="#ffb54722" stroke="#ffb547" stroke-width="2.4" stroke-linejoin="round"/>
+      <circle cx="50" cy="14" r="3" fill="#ffb547"/></g>
+</svg>

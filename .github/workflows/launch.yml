@@ -1,0 +1,49 @@
+name: Launch pad
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: profile-commit
+  cancel-in-progress: false
+
+jobs:
+  launch:
+    # startsWith is case-insensitive in Actions expressions
+    if: startsWith(github.event.issue.title, 'launch')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The issue title/body are untrusted: they are only read by the script from
+      # the event payload file, never interpolated into this shell script.
+      - name: Fly
+        run: python scripts/launch.py --comment-out "$RUNNER_TEMP/report.md"
+
+      - name: Report and close
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE" --body-file "$RUNNER_TEMP/report.md"
+          gh issue close "$ISSUE" --reason completed
+
+      - name: Commit leaderboard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data README.md
+          if git diff --cached --quiet; then
+            echo "No changes"; exit 0
+          fi
+          git commit -m "🚀 launch #${{ github.event.issue.number }}"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
