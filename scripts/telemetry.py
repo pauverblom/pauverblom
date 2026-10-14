@@ -71,18 +71,25 @@ def fetch_days(user: str, now: datetime) -> dict[date, int]:
 def fetch_events(user: str, skip_repos: list[str]) -> list[dict]:
     """Recent public events, condensed into ground-station log lines."""
     raw = _request(f"{API}/users/{user}/events/public?per_page=100")
+    skip = {r.lower() for r in skip_repos}
     out: list[dict] = []
-    for ev in raw:
+    for ev in raw:  # newest first
         repo = ev["repo"]["name"]
-        if repo in skip_repos:
+        if repo.lower() in skip:
             continue
         p, kind, t = ev.get("payload", {}), ev["type"], ev["created_at"]
         tag = text = None
         if kind == "PushEvent":
-            n = p.get("size") or p.get("distinct_size")
+            # A run of consecutive pushes to one repo becomes a single log line.
+            prev = out[-1] if out else None
+            if prev and prev["tag"] == "PUSH" and prev["repo"] == repo:
+                prev["pushes"] += 1
+                prev["text"] = f"{prev['pushes']} pushes → {repo}"
+                continue
             branch = (p.get("ref") or "").removeprefix("refs/heads/")
-            what = f"{n} commit{'s' if n != 1 else ''}" if n else "commits"
-            tag, text = "PUSH", f"{what} → {repo}" + (f":{branch}" if branch else "")
+            out.append({"time": t, "tag": "PUSH", "repo": repo, "pushes": 1,
+                        "text": f"pushed → {repo}" + (f":{branch}" if branch else "")})
+            continue
         elif kind == "PullRequestEvent":
             pr, action = p.get("pull_request", {}), p.get("action")
             num = p.get("number") or pr.get("number")
@@ -105,7 +112,7 @@ def fetch_events(user: str, skip_repos: list[str]) -> list[dict]:
         elif kind == "ForkEvent":
             tag, text = "FORK", f"forked {repo}"
         if tag and (not out or out[-1]["text"] != text):
-            out.append({"time": t, "tag": tag, "text": text})
+            out.append({"time": t, "tag": tag, "repo": repo, "text": text})
     return out
 
 
