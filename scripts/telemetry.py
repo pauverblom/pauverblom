@@ -150,7 +150,8 @@ def analyse(days: dict[date, int], now: datetime) -> dict:
     week = lambda end: sum(get(end - timedelta(days=k)) for k in range(7))
     v7, vprev = week(today), week(today - timedelta(days=7))
     recent_weeks = [week(today - timedelta(days=7 * k)) for k in range(8)]
-    ytd = sum(c for d, c in days.items() if d.year == today.year and d <= today)
+    # Rolling 12 months, the same window as the profile's contribution grid.
+    last_year = sum(c for d, c in days.items() if today - timedelta(days=365) < d <= today)
 
     if v7 == 0:
         phase = "RECOVERY"
@@ -166,7 +167,7 @@ def analyse(days: dict[date, int], now: datetime) -> dict:
     t0 = datetime(today.year, 1, 1, tzinfo=timezone.utc)
     met = now - t0
     return {
-        "ytd": ytd,
+        "last_year": last_year,
         "v7": v7,
         "vprev": vprev,
         "accel": v7 - vprev,
@@ -250,8 +251,8 @@ def render_panel(a: dict, events: list[dict], cfg: dict, theme: str, now: dateti
     xs = [20 + i * (cw + 16) for i in range(4)]
 
     # ALTITUDE
-    body = (f'<text x="14" y="64" class="t big">{a["ytd"]:,}</text>'
-            f'<text x="14" y="88" class="t dim" font-size="11">contributions this year</text>')
+    body = (f'<text x="14" y="64" class="t big">{a["last_year"]:,}</text>'
+            f'<text x="14" y="88" class="t dim" font-size="11">contributions in the last year</text>')
     out.append(card(xs[0], cy, cw, ch, c, "ALTITUDE", body))
 
     # VELOCITY + 8-week bars
@@ -459,7 +460,7 @@ def main() -> None:
             changed.append(f"telemetry-{theme}.svg")
         if write_text(ASSETS / f"flight-profile-{theme}.svg", render_profile(days, cfg, theme, now)):
             changed.append(f"flight-profile-{theme}.svg")
-    print(f"phase={a['phase']} ytd={a['ytd']} v7={a['v7']} accel={a['accel']:+d}")
+    print(f"phase={a['phase']} last_year={a['last_year']} v7={a['v7']} accel={a['accel']:+d}")
     print("updated:", ", ".join(changed) or "nothing")
 
 
