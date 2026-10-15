@@ -47,7 +47,7 @@ Every visitor gets a launch. Pick a motor, open the pre-filled issue, and a GitH
 <!-- LEADERBOARD:START -->
 | | Pilot | Motor | Apogee | Max speed | Flight |
 | :-: | --- | :-: | --: | --: | :-: |
-| 🥇 | [@pauverblom](https://github.com/pauverblom) | I | **1,094 m** | Mach 0.51 | [#1](https://github.com/pauverblom/pauverblom/issues/1) |
+| 🥇 | [@pauverblom](https://github.com/pauverblom) | K | **2,103 m** | Mach 0.76 | [#2](https://github.com/pauverblom/pauverblom/issues/2) |
 
-<sub>1 launch by 1 pilot · latest: @pauverblom reached 1,094 m on a I motor</sub>
+<sub>2 launches by 1 pilot · latest: @pauverblom reached 2,103 m on a K motor</sub>
 <!-- LEADERBOARD:END -->

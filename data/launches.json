@@ -7,5 +7,14 @@
   "apogee": 1094.1,
   "max_mach": 0.508,
   "anomaly": null
+ },
+ {
+  "issue": 2,
+  "login": "pauverblom",
+  "motor": "K",
+  "time": "2026-10-15T11:02:02+00:00",
+  "apogee": 2102.8,
+  "max_mach": 0.761,
+  "anomaly": null
  }
 ]
